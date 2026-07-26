@@ -12,6 +12,20 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 body {
   @apply bg-slate-950 text-slate-50 antialiased;
 }
@@ -20,30 +34,47 @@ body {
   min-height: 100vh;
 }
 
-.glass-panel {
-  @apply bg-slate-900/70 border border-slate-800/80 backdrop-blur-xl;
-}
+/* These live in the components layer so utility classes still win. Defined as bare
+   rules after @tailwind utilities, `.btn-primary { display: inline-flex }` would beat
+   `hidden`/`md:inline-flex` on the same element through source order alone. */
+@layer components {
+  .glass-panel {
+    @apply bg-slate-900/70 border border-slate-800/80 backdrop-blur-xl;
+  }
 
-.section-container {
-  @apply max-w-5xl mx-auto px-4;
-}
+  .section-container {
+    @apply max-w-5xl mx-auto px-4;
+  }
 
-.gradient-ring {
-  background:
-    radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
-    radial-gradient(circle at 100% 0%, rgba(147, 51, 234, 0.16), transparent 55%),
-    radial-gradient(circle at 50% 100%, rgba(251, 113, 133, 0.18), transparent 55%);
-}
+  .gradient-ring {
+    background:
+      radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.16), transparent 55%),
+      radial-gradient(circle at 100% 0%, rgba(147, 51, 234, 0.16), transparent 55%),
+      radial-gradient(circle at 50% 100%, rgba(251, 113, 133, 0.18), transparent 55%);
+  }
 
-.hero-grid {
-  background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.35) 1px, transparent 0);
-  background-size: 22px 22px;
-}
+  .hero-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(148, 163, 184, 0.35) 1px,
+      transparent 0
+    );
+    background-size: 22px 22px;
+  }
 
-.btn-primary {
-  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-slate-950 bg-brand-400 hover:bg-brand-300 transition-colors shadow-glow;
-}
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-slate-950 bg-brand-400 hover:bg-brand-300 transition-colors shadow-glow;
+  }
 
-.btn-ghost {
-  @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-slate-100 border border-slate-700 hover:border-slate-500 hover:bg-slate-900/60 transition-colors;
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-medium text-slate-100 border border-slate-700 hover:border-slate-500 hover:bg-slate-900/60 transition-colors;
+  }
+
+  .field-input {
+    @apply w-full rounded-lg border border-slate-700 bg-slate-900/70 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 focus:border-brand-400 focus:outline-none focus:ring-1 focus:ring-brand-400;
+  }
+
+  .field-label {
+    @apply block text-xs font-medium text-slate-300 mb-1;
+  }
 }
